@@ -18,6 +18,9 @@ namespace BankStatementReader
         private readonly IStatementFormFactory _statementFormFactory;
         private readonly IStatementFormPresenterFactory _statementFormPresenterFactory;
         private readonly IDialogService _dialogService;
+        private readonly IExtrasParserFactory _extrasParserFactory;
+        public static string NumeFisier { get; set; }
+
 
         public MainFormPresenter(IMainForm mainForm, IStatementFormFactory statementFormFactory, IStatementFormPresenterFactory statementFormPresenterFactory, IDialogService dialogService)
         {
@@ -30,17 +33,13 @@ namespace BankStatementReader
 
         public void OnOpenButtonClick(object sender, EventArgs e)
         {
-            IExtrasParserFactory extrasParserFactory = new ExtrasParserFactory();
-            IStatementFormFactory statementFormFactory=new StatementFormFactory();
-            IStatementFormPresenterFactory statementFormPresenterFactory = new StatementFormPresenterFactory();
-            string numeFisier = _dialogService.OpenFile();
+            NumeFisier = _dialogService.OpenFile();
 
-            if (String.IsNullOrEmpty(numeFisier) == false)
+            if (String.IsNullOrEmpty(NumeFisier) == false)
             {
-                var statementForm = statementFormFactory.Create();
-                var statementFormPresenter = statementFormPresenterFactory.Create(extrasParserFactory, statementForm);
+                var statementForm = _statementFormFactory.Create();
+                var statementFormPresenter = _statementFormPresenterFactory.Create(_extrasParserFactory, statementForm);
                 _mainForm.ShowStatementForm(statementForm);
-                List<Extras> listaExtrase = statementFormPresenter.CreateRuntimeExtrasList(numeFisier);
             }
         }
     }

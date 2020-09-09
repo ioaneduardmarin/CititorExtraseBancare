@@ -16,10 +16,13 @@ namespace BankStatementReader
         private readonly IExtrasParserFactory _extrasParserFactory;
         private readonly IStatementForm _statementForm;
 
+
+
         public StatementFormPresenter(IExtrasParserFactory extrasParserFactory, IStatementForm statementForm)
         {
             _statementForm = statementForm;
             _extrasParserFactory = extrasParserFactory;
+            statementForm.StatementShown += ShownStatementForm;
         }
 
         public List<Extras> CreateRuntimeExtrasList(string numeFisier)
@@ -29,6 +32,18 @@ namespace BankStatementReader
             var extrasParser = _extrasParserFactory.Create();
             listaExtrase = extrasParser.Parse(statementLines);
             return listaExtrase;
+        }
+
+        public string ObtineNumeFisier()
+        {
+            return MainFormPresenter.NumeFisier;
+        }
+
+        public void ShownStatementForm(object sender, EventArgs e)
+        {
+            string numeFisier = ObtineNumeFisier();
+            List<Extras> listaExtrase = CreateRuntimeExtrasList(numeFisier);
+            _statementForm.BindStatements(listaExtrase);
         }
 
         private void StatementGridRowClick(object sender, RowClickEventArgs e)

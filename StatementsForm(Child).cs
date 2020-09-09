@@ -32,7 +32,7 @@ namespace BankStatementReader
             }
         }
 
-        public void BindStatements(StatementForm statementForm, List<Extras> listaExtrase)
+        public void BindStatements( List<Extras> listaExtrase)
         {
             BindingList<StatementGridItemModel> statementGridData = new BindingList<StatementGridItemModel>();
             statementGridData.Clear();
@@ -40,7 +40,7 @@ namespace BankStatementReader
             {
                 statementGridData.Add(new StatementGridItemModel(listaExtrase[index]));
             }
-            statementForm.StatementsGrid.DataSource = statementGridData;
+            StatementsGrid.DataSource = statementGridData;
         }
 
         public void BindTransactions(StatementForm statementForm, Extras extras)
@@ -54,7 +54,17 @@ namespace BankStatementReader
             statementForm.TransactionsGrid.DataSource = listaTranzactii;
         }
 
-        public event EventHandler CatchShowStatementForm;
+        public event EventHandler StatementShown
+        {
+            add
+            {
+                this.Shown += value;
+            }
+            remove
+            {
+                this.Shown -= value;
+            }
+        }
     }
 
     public interface IStatementForm
@@ -62,8 +72,8 @@ namespace BankStatementReader
         string Text { get; set; }
 
         event RowClickEventHandler StatementGridRowClicked;
-        event EventHandler CatchShowStatementForm;
-        void BindStatements(StatementForm statementForm, List<Extras> listaExtrase);
+        event EventHandler StatementShown;
+        void BindStatements(List<Extras> listaExtrase);
         void BindTransactions(StatementForm statementForm, Extras extras);
         void Show();
     }
