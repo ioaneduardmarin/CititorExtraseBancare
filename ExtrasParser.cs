@@ -41,7 +41,7 @@ namespace BankStatementReader
                 _extras.DataSoldInitial = (DateTime.ParseExact("20" + sir.Substring(1, 6), "yyyyMMdd", null));
                 _extras.ValutaSoldInitial = sir.Substring(7, 3);
                 _extras.SumaSoldInitial = Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100;
-                _extras.InformatiiPentruClientSoldInitial = sir.Substring(sir.IndexOf(":86:") + 4);
+                _extras.InformatiiPentruClientSoldInitial = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "    ");
             }
             else
             {
@@ -67,10 +67,9 @@ namespace BankStatementReader
                 tranzactie.TipTranzactie = sir.Substring(sir.IndexOf(',') + 3, 4);
                 tranzactie.ReferintaClient = sir.Substring(sir.IndexOf(',') + 7, 16);
                 tranzactie.DetaliiTranzactie = "";
-                tranzactie.InformatiiPentruClient = sir.Substring(sir.IndexOf(":86:") + 4);
+                tranzactie.InformatiiPentruClient = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "    ");
             }
-
-            if (sir.IndexOf(":86:") - sir.IndexOf("/") > 52)
+            else
             {
                 tranzactie.DataTranzactie = (DateTime.ParseExact("20" + sir.Substring(0, 6), "yyyyMMdd", null)).Date;
                 tranzactie.CodTranzactie = sir.Substring(10, 1);
@@ -78,7 +77,7 @@ namespace BankStatementReader
                 tranzactie.TipTranzactie = sir.Substring(sir.IndexOf(',') + 3, 4);
                 tranzactie.ReferintaClient = sir.Substring(sir.IndexOf(',') + 7, 16);
                 tranzactie.DetaliiTranzactie = sir.Substring(sir.IndexOf(',') + 74, sir.IndexOf(":86:") - sir.IndexOf(',') + 74);
-                tranzactie.InformatiiPentruClient = sir.Substring(sir.IndexOf(":86:") + 4);
+                tranzactie.InformatiiPentruClient = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "    ");
             }
             return tranzactie;
         }
@@ -91,7 +90,7 @@ namespace BankStatementReader
                 _extras.DataSoldRezervat = (DateTime.ParseExact("20" + sir.Substring(1, 6), "yyyyMMdd", null)).Date;
                 _extras.ValutaSoldRezervat = sir.Substring(7, 3);
                 _extras.SumaSoldRezervat = Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100;
-                _extras.InformatiiPentruClientSoldRezervat = sir.Substring(sir.IndexOf(":86:") + 4);
+                _extras.InformatiiPentruClientSoldRezervat = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "    ");
             }
             else
             {
@@ -112,7 +111,7 @@ namespace BankStatementReader
                 _extras.DataSoldFinalDisponibil = (DateTime.ParseExact("20" + sir.Substring(1, 6), "yyyyMMdd", null)).Date;
                 _extras.ValutaSoldFinalDisponibil = sir.Substring(7, 3);
                 _extras.SumaSoldFinalDisponibil = Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100;
-                _extras.InformatiiPentruClientSoldFinalDisponibil = sir.Substring(sir.IndexOf(":86:") + 4);
+                _extras.InformatiiPentruClientSoldFinalDisponibil = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "    ");
             }
             else
             {
@@ -133,7 +132,7 @@ namespace BankStatementReader
                 _extras.DataSoldDisponibil = (DateTime.ParseExact("20" + sir.Substring(1, 6), "yyyyMMdd", null)).Date;
                 _extras.ValutaSoldDisponibil = sir.Substring(7, 3);
                 _extras.SumaSoldDisponibil = Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100;
-                _extras.InformatiiPentruClientSoldDisponibil = sir.Substring(sir.IndexOf(":86:") + 4);
+                _extras.InformatiiPentruClientSoldDisponibil = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "    ");
             }
             else
             {

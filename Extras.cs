@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BankStatementReader
 {
     public class Extras
     {
-        public int ExtrasId { get; set; } 
+        public int ExtrasId { get; set; }
         //Informatii generale despre extras
         public string NumarReferinta { get; set; }
         public string Iban { get; set; }
@@ -38,15 +37,5 @@ namespace BankStatementReader
         public string? ValutaSoldDisponibil { get; set; }
         public decimal? SumaSoldDisponibil { get; set; }
         public string? InformatiiPentruClientSoldDisponibil { get; set; }
-
-        /*public Extras(int extrasId, string numarReferinta, string iban, string nrExtras, decimal sumaSoldInitial, decimal sumaSoldRezervat)
-        {
-            ExtrasId = extrasId;
-            NumarReferintaCont = numarReferinta;
-            ContIban = iban;
-            NrExtras = nrExtras;
-            SumaSoldInitial = sumaSoldInitial;
-            SumaSoldRezervat = sumaSoldRezervat;
-        }*/
     }
 }

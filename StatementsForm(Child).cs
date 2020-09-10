@@ -7,8 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.ClipboardSource.SpreadsheetML;
-using DevExpress.Data.XtraReports.DataProviders;
 using DevExpress.XtraGrid.Views.Grid;
 
 namespace BankStatementReader
@@ -20,19 +18,7 @@ namespace BankStatementReader
             InitializeComponent();
         }
 
-        public event RowClickEventHandler StatementGridRowClicked
-        {
-            add
-            {
-                StatementsGridView.RowClick += value;
-            }
-            remove
-            {
-                StatementsGridView.RowClick -= value;
-            }
-        }
-
-        public void BindStatements( List<Extras> listaExtrase)
+        public void BindStatements(List<Extras> listaExtrase)
         {
             BindingList<StatementGridItemModel> statementGridData = new BindingList<StatementGridItemModel>();
             statementGridData.Clear();
@@ -43,7 +29,7 @@ namespace BankStatementReader
             StatementsGrid.DataSource = statementGridData;
         }
 
-        public void BindTransactions(StatementForm statementForm, Extras extras)
+        public void BindTransactions(Extras extras)
         {
             BindingList<TransactionGridItemModel> listaTranzactii = new BindingList<TransactionGridItemModel>();
             listaTranzactii.Clear();
@@ -51,7 +37,7 @@ namespace BankStatementReader
             {
                 listaTranzactii.Add(new TransactionGridItemModel(extras.Tranzactii[index]));
             }
-            statementForm.TransactionsGrid.DataSource = listaTranzactii;
+            TransactionsGrid.DataSource = listaTranzactii;
         }
 
         public event EventHandler StatementShown
@@ -65,6 +51,18 @@ namespace BankStatementReader
                 this.Shown -= value;
             }
         }
+
+        public event RowClickEventHandler StatementGridRowClicked
+        {
+            add
+            {
+                StatementsGridView.RowClick += value;
+            }
+            remove
+            {
+                StatementsGridView.RowClick -= value;
+            }
+        }
     }
 
     public interface IStatementForm
@@ -74,7 +72,7 @@ namespace BankStatementReader
         event RowClickEventHandler StatementGridRowClicked;
         event EventHandler StatementShown;
         void BindStatements(List<Extras> listaExtrase);
-        void BindTransactions(StatementForm statementForm, Extras extras);
+        void BindTransactions(Extras extras);
         void Show();
     }
 }
