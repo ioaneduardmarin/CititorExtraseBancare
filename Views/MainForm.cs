@@ -29,7 +29,7 @@ namespace BankStatementReader
             remove => this.Load += value;
         }
 
-        public void WindowButtonClick(List<Tuple<string, object>> listStatementFormTagText)
+        public void CreateWindowDropDownList(List<Tuple<string, object>> listStatementFormTagText)
         {
             if (windowButton.DropDownItems.Count > 0)
             {
@@ -84,7 +84,7 @@ namespace BankStatementReader
         void ShowStatementForm(IStatementForm statementForm);
         event EventHandler OnOpenButtonClick;
         event EventHandler OnWindowButtonClick;
-        public void WindowButtonClick(List<Tuple<string,object>> listStatementFormPresenters);
+        public void CreateWindowDropDownList(List<Tuple<string,object>> listStatementFormPresenters);
         public event EventHandler OnWindowStatementClick;
         Form GetForm();
         void SetMainFormTitle(string activeStatement);
