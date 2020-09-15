@@ -37,8 +37,7 @@
             this.colTipTranzactie = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSumaTranzactie = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCodTranzactie = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
-            this.TransactionGridLabel = new System.Windows.Forms.Label();
+            this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.TransactionsGrid = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colTranzactieId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -47,11 +46,6 @@
             this.colSumaTranzactie1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTipTranzactie1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colInformatiiPentruClient1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-            this.StatementGridLabel = new System.Windows.Forms.Label();
             this.StatementsGrid = new DevExpress.XtraGrid.GridControl();
             this.StatementsGridView = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colSGIMStatementId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -60,32 +54,27 @@
             this.ColNrExtras = new DevExpress.XtraGrid.Columns.GridColumn();
             this.ColSumaInitiala = new DevExpress.XtraGrid.Columns.GridColumn();
             this.ColSumaFinalRezervat = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+
+            this.statementsLabel = new DevExpress.XtraLayout.SimpleLabelItem();
+            this.transactionLaber = new DevExpress.XtraLayout.SimpleLabelItem();
             ((System.ComponentModel.ISupportInitialize)(this.statementGridItemModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.transactionGridItemModelBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
-            this.layoutControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TransactionsGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TransactionsGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StatementsGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StatementsGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.statementsLabel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transactionLaber)).BeginInit();
             this.SuspendLayout();
             // 
             // statementGridItemModelBindingSource
@@ -126,34 +115,26 @@
             this.colCodTranzactie.FieldName = "CodTranzactie";
             this.colCodTranzactie.Name = "colCodTranzactie";
             // 
-            // layoutControl2
+            // layoutControl1
             // 
-            this.layoutControl2.Controls.Add(this.TransactionGridLabel);
-            this.layoutControl2.Controls.Add(this.TransactionsGrid);
-            this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl2.Location = new System.Drawing.Point(0, 0);
-            this.layoutControl2.Name = "layoutControl2";
-            this.layoutControl2.Root = this.layoutControlGroup1;
-            this.layoutControl2.Size = new System.Drawing.Size(1475, 294);
-            this.layoutControl2.TabIndex = 2;
-            this.layoutControl2.Text = "layoutControl2";
-            // 
-            // TransactionGridLabel
-            // 
-            this.TransactionGridLabel.Location = new System.Drawing.Point(12, 12);
-            this.TransactionGridLabel.Name = "TransactionGridLabel";
-            this.TransactionGridLabel.Size = new System.Drawing.Size(1451, 20);
-            this.TransactionGridLabel.TabIndex = 0;
-            this.TransactionGridLabel.Text = "Transactions: ";
+            this.layoutControl1.Controls.Add(this.TransactionsGrid);
+            this.layoutControl1.Controls.Add(this.StatementsGrid);
+            this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutControl1.Location = new System.Drawing.Point(0, 0);
+            this.layoutControl1.Name = "layoutControl1";
+            this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(-1040, 333, 650, 400);
+            this.layoutControl1.Root = this.Root;
+            this.layoutControl1.Size = new System.Drawing.Size(1475, 594);
+            this.layoutControl1.TabIndex = 0;
+            this.layoutControl1.Text = "layoutControl1";
             // 
             // TransactionsGrid
             // 
-            this.TransactionsGrid.DataSource = this.transactionGridItemModelBindingSource;
-            this.TransactionsGrid.Location = new System.Drawing.Point(12, 36);
+            this.TransactionsGrid.Location = new System.Drawing.Point(12, 231);
             this.TransactionsGrid.MainView = this.gridView1;
             this.TransactionsGrid.Name = "TransactionsGrid";
-            this.TransactionsGrid.Size = new System.Drawing.Size(1451, 246);
-            this.TransactionsGrid.TabIndex = 1;
+            this.TransactionsGrid.Size = new System.Drawing.Size(1451, 350);
+            this.TransactionsGrid.TabIndex = 5;
             this.TransactionsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
             // 
@@ -224,66 +205,13 @@
             this.colInformatiiPentruClient1.VisibleIndex = 5;
             this.colInformatiiPentruClient1.Width = 152;
             // 
-            // layoutControlGroup1
-            // 
-            this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-            this.layoutControlGroup1.GroupBordersVisible = false;
-            this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem3,
-            this.layoutControlItem4});
-            this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(1475, 294);
-            this.layoutControlGroup1.TextVisible = false;
-            // 
-            // layoutControlItem3
-            // 
-            this.layoutControlItem3.Control = this.TransactionsGrid;
-            this.layoutControlItem3.Location = new System.Drawing.Point(0, 24);
-            this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(1455, 250);
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem3.TextVisible = false;
-            // 
-            // layoutControlItem4
-            // 
-            this.layoutControlItem4.Control = this.TransactionGridLabel;
-            this.layoutControlItem4.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem4.MaxSize = new System.Drawing.Size(0, 24);
-            this.layoutControlItem4.MinSize = new System.Drawing.Size(24, 24);
-            this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(1455, 24);
-            this.layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem4.TextVisible = false;
-            // 
-            // layoutControl1
-            // 
-            this.layoutControl1.Controls.Add(this.StatementGridLabel);
-            this.layoutControl1.Controls.Add(this.StatementsGrid);
-            this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControl1.Name = "layoutControl1";
-            this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(1475, 296);
-            this.layoutControl1.TabIndex = 2;
-            this.layoutControl1.Text = "layoutControl1";
-            // 
-            // StatementGridLabel
-            // 
-            this.StatementGridLabel.Location = new System.Drawing.Point(12, 12);
-            this.StatementGridLabel.Name = "StatementGridLabel";
-            this.StatementGridLabel.Size = new System.Drawing.Size(1451, 20);
-            this.StatementGridLabel.TabIndex = 0;
-            this.StatementGridLabel.Text = "Statements: ";
-            // 
             // StatementsGrid
             // 
-            this.StatementsGrid.DataSource = this.statementGridItemModelBindingSource;
-            this.StatementsGrid.Location = new System.Drawing.Point(12, 36);
+            this.StatementsGrid.Location = new System.Drawing.Point(12, 29);
             this.StatementsGrid.MainView = this.StatementsGridView;
             this.StatementsGrid.Name = "StatementsGrid";
-            this.StatementsGrid.Size = new System.Drawing.Size(1451, 248);
-            this.StatementsGrid.TabIndex = 1;
+            this.StatementsGrid.Size = new System.Drawing.Size(1451, 181);
+            this.StatementsGrid.TabIndex = 4;
             this.StatementsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.StatementsGridView,
             this.gridView2});
@@ -357,90 +285,82 @@
             this.ColSumaFinalRezervat.VisibleIndex = 5;
             this.ColSumaFinalRezervat.Width = 151;
             // 
+            // gridView2
+            // 
+            this.gridView2.GridControl = this.StatementsGrid;
+            this.gridView2.Name = "gridView2";
+            // 
             // Root
             // 
             this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             this.Root.GroupBordersVisible = false;
             this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1,
-            this.layoutControlItem2});
+            this.layoutControlItem2,
+            this.statementsLabel,
+            this.transactionLaber});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(1475, 296);
+            this.Root.Size = new System.Drawing.Size(1475, 594);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.StatementsGrid;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 24);
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 17);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(1455, 252);
+            this.layoutControlItem1.Size = new System.Drawing.Size(1455, 185);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
             // layoutControlItem2
             // 
-            this.layoutControlItem2.Control = this.StatementGridLabel;
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem2.MaxSize = new System.Drawing.Size(0, 24);
-            this.layoutControlItem2.MinSize = new System.Drawing.Size(24, 24);
+            this.layoutControlItem2.Control = this.TransactionsGrid;
+            this.layoutControlItem2.Location = new System.Drawing.Point(0, 219);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(1455, 24);
-            this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.layoutControlItem2.Size = new System.Drawing.Size(1455, 354);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
-            // gridView2
+            // statementsLabel
             // 
-            this.gridView2.GridControl = this.StatementsGrid;
-            this.gridView2.Name = "gridView2";
+            this.statementsLabel.AllowHotTrack = false;
+            this.statementsLabel.Location = new System.Drawing.Point(0, 0);
+            this.statementsLabel.Name = "statementsLabel";
+            this.statementsLabel.Size = new System.Drawing.Size(1455, 17);
+            this.statementsLabel.Text = "Statements: ";
+            this.statementsLabel.TextSize = new System.Drawing.Size(68, 13);
             // 
-            // splitContainer1
+            // transactionLaber
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.layoutControl1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.layoutControl2);
-            this.splitContainer1.Size = new System.Drawing.Size(1475, 594);
-            this.splitContainer1.SplitterDistance = 296;
-            this.splitContainer1.TabIndex = 2;
+            this.transactionLaber.AllowHotTrack = false;
+            this.transactionLaber.Location = new System.Drawing.Point(0, 202);
+            this.transactionLaber.Name = "transactionLaber";
+            this.transactionLaber.Size = new System.Drawing.Size(1455, 17);
+            this.transactionLaber.Text = "Transactions: ";
+            this.transactionLaber.TextSize = new System.Drawing.Size(68, 13);
             // 
             // StatementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1475, 594);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.layoutControl1);
             this.Name = "StatementForm";
             this.Text = "StatementForm";
             ((System.ComponentModel.ISupportInitialize)(this.statementGridItemModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.transactionGridItemModelBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
-            this.layoutControl2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.TransactionsGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TransactionsGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StatementsGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StatementsGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.statementsLabel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transactionLaber)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -454,21 +374,8 @@
         private DevExpress.XtraGrid.Columns.GridColumn colSumaTranzactie;
         private DevExpress.XtraGrid.Columns.GridColumn colCodTranzactie;
         private System.Windows.Forms.BindingSource transactionGridItemModelBindingSource;
-        private DevExpress.XtraLayout.LayoutControl layoutControl2;
-        private System.Windows.Forms.Label TransactionGridLabel;
-        private DevExpress.XtraGrid.GridControl TransactionsGrid;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-        private DevExpress.XtraGrid.Columns.GridColumn colTranzactieId;
-        private DevExpress.XtraGrid.Columns.GridColumn colDataTranzactie;
-        private DevExpress.XtraGrid.Columns.GridColumn colCodTranzactie1;
-        private DevExpress.XtraGrid.Columns.GridColumn colSumaTranzactie1;
-        private DevExpress.XtraGrid.Columns.GridColumn colTipTranzactie1;
-        private DevExpress.XtraGrid.Columns.GridColumn colInformatiiPentruClient1;
-        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
         private DevExpress.XtraLayout.LayoutControl layoutControl1;
-        private System.Windows.Forms.Label StatementGridLabel;
+        private DevExpress.XtraLayout.LayoutControlGroup Root;
         private DevExpress.XtraGrid.GridControl StatementsGrid;
         private DevExpress.XtraGrid.Views.Grid.GridView StatementsGridView;
         private DevExpress.XtraGrid.Columns.GridColumn colSGIMStatementId;
@@ -477,10 +384,18 @@
         private DevExpress.XtraGrid.Columns.GridColumn ColNrExtras;
         private DevExpress.XtraGrid.Columns.GridColumn ColSumaInitiala;
         private DevExpress.XtraGrid.Columns.GridColumn ColSumaFinalRezervat;
-        private DevExpress.XtraLayout.LayoutControlGroup Root;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
-        private System.Windows.Forms.SplitContainer splitContainer1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraGrid.GridControl TransactionsGrid;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraGrid.Columns.GridColumn colTranzactieId;
+        private DevExpress.XtraGrid.Columns.GridColumn colDataTranzactie;
+        private DevExpress.XtraGrid.Columns.GridColumn colCodTranzactie1;
+        private DevExpress.XtraGrid.Columns.GridColumn colSumaTranzactie1;
+        private DevExpress.XtraGrid.Columns.GridColumn colTipTranzactie1;
+        private DevExpress.XtraGrid.Columns.GridColumn colInformatiiPentruClient1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraLayout.SimpleLabelItem statementsLabel;
+        private DevExpress.XtraLayout.SimpleLabelItem transactionLaber;
     }
 }
