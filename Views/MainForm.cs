@@ -49,7 +49,7 @@ namespace BankStatementReader
             }
         }
 
-        public void DisableWindowButton(bool windowButtonEnable)
+        public void SetWindowsListDropDownEnabledState(bool windowButtonEnable)
         {
             if (!windowButtonEnable)
             {
@@ -73,7 +73,7 @@ namespace BankStatementReader
             return this;
         }
 
-        public void RenameAfterActiveStatement(string activeStatement)
+        public void SetMainFormTitle(string activeStatement)
         {
             Text = "Bank Statement Reader " + activeStatement;
         }
@@ -87,8 +87,8 @@ namespace BankStatementReader
         public void WindowButtonClick(List<Tuple<string,object>> listStatementFormPresenters);
         public event EventHandler OnWindowStatementClick;
         Form GetForm();
-        void RenameAfterActiveStatement(string activeStatement);
+        void SetMainFormTitle(string activeStatement);
         event EventHandler OnMainFormLoad;
-        void DisableWindowButton(bool windowButtonEnable);
+        void SetWindowsListDropDownEnabledState(bool windowButtonEnable);
     }
 }

@@ -34,28 +34,28 @@ namespace BankStatementReader
 
         private void MainFormLoad(object sender, EventArgs e)
         {
-            _mainForm.DisableWindowButton(false);
+            _mainForm.SetWindowsListDropDownEnabledState(false);
         }
 
         private void ResetMainForm()
         {
             if (_listStatementFormPresenters.Count == 0)
             {
-                _mainForm.RenameAfterActiveStatement("");
-                _mainForm.DisableWindowButton(false);
+                _mainForm.SetMainFormTitle("");
+                _mainForm.SetWindowsListDropDownEnabledState(false);
             }
         }
 
         private void OnWindowButtonClick(object sender, EventArgs e)
         {
-            _mainForm.WindowButtonClick(_listStatementFormTagText);
+            _mainForm.CreateWindowDropDownList(_listStatementFormTagText);
         }
 
         public void OnOpenStatementFormMessage(StatementFormPresenter statementFormPresenter, List<Tuple<string, object>> listStatementFormTagText)
         {
             UpdateStatmentPresenterList(statementFormPresenter);
-            _mainForm.DisableWindowButton(true);
-            _mainForm.WindowButtonClick(_listStatementFormTagText);
+            _mainForm.SetWindowsListDropDownEnabledState(true);
+            _mainForm.CreateWindowDropDownList(_listStatementFormTagText);
         }
 
         public void OnCloseStatementMessage(StatementFormPresenter statementFormPresenter)
@@ -64,7 +64,7 @@ namespace BankStatementReader
             var textTagStatementFormPresenterTuple = new Tuple<string, object>(statementFormPresenter.GetStatementFormName()
                 .Substring(statementFormPresenter.GetStatementFormName().LastIndexOf('\\') + 1), statementFormPresenter);
             _listStatementFormTagText.Remove(textTagStatementFormPresenterTuple);
-            _mainForm.WindowButtonClick(_listStatementFormTagText);
+            _mainForm.CreateWindowDropDownList(_listStatementFormTagText);
             ResetMainForm();
         }
 
@@ -85,7 +85,7 @@ namespace BankStatementReader
                 statementForm.Text = _numeFisier;
                 var statementFormPresenter = _statementFormPresenterFactory.Create(_extrasParserFactory, statementForm, _dialogService);
                 statementFormPresenter.SetMdiParent(_mainForm.GetForm());
-                _mainForm.WindowButtonClick(_listStatementFormTagText);
+                _mainForm.CreateWindowDropDownList(_listStatementFormTagText);
                 EventAggregator.Instance.Publish(new OpenStatementFormMessage((StatementFormPresenter)statementFormPresenter));
                 _mainForm.ShowStatementForm(statementForm);
             }
@@ -103,7 +103,7 @@ namespace BankStatementReader
         {
             string statementFormName = statementFormPresenter.GetStatementFormName()
                  .Substring(statementFormPresenter.GetStatementFormName().LastIndexOf('\\') + 1);
-            _mainForm.RenameAfterActiveStatement(statementFormName);
+            _mainForm.SetMainFormTitle(statementFormName);
         }
     }
 
