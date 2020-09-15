@@ -220,7 +220,7 @@ namespace BankStatementReader
                 }
             }
 
-            if (isExtrasValid == true)
+            if (isExtrasValid)
             {
                 _extrasId += 1;
                 _extras.ExtrasId = _extrasId;

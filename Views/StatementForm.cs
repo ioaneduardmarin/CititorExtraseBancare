@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraGrid.Views.Grid;
 
@@ -28,40 +22,28 @@ namespace BankStatementReader
             TransactionsGrid.DataSource = listaTranzactii;
         }
 
-        public event EventHandler StatementShown
+        public event EventHandler OnStatementShown
         {
-            add
-            {
-                this.Shown += value;
-            }
-            remove
-            {
-                this.Shown -= value;
-            }
+            add => this.Shown += value;
+            remove => this.Shown -= value;
         }
 
-        public event RowClickEventHandler StatementGridRowClicked
+        public event RowClickEventHandler OnStatementGridRowClick
         {
-            add
-            {
-                StatementsGridView.RowClick += value;
-            }
-            remove
-            {
-                StatementsGridView.RowClick -= value;
-            }
+            add => StatementsGridView.RowClick += value;
+            remove => StatementsGridView.RowClick -= value;
         }
 
-        public event FormClosedEventHandler WhenStatementFormClosed
+        public event FormClosedEventHandler OnStatementFormClosing
         {
-            add
-            {
-                this.FormClosed += value;
-            }
-            remove
-            {
-                this.FormClosed += value;
-            }
+            add => this.FormClosed += value;
+            remove => this.FormClosed += value;
+        }
+
+        public event EventHandler OnStatementFormActivating
+        {
+            add => this.Activated += value;
+            remove => this.Activated -= value;
         }
 
         public void CloseStatementForm()
@@ -78,32 +60,20 @@ namespace BankStatementReader
         {
             this.MdiParent = mdiParent;
         }
-
-        public event EventHandler ActiveStatementForm
-        {
-            add
-            {
-                this.Activated += value;
-            }
-            remove
-            {
-                this.Activated -= value;
-            }
-        }
     }
 
     public interface IStatementForm
     {
         string Text { get; set; }
-        event RowClickEventHandler StatementGridRowClicked;
-        event EventHandler StatementShown;
+        event RowClickEventHandler OnStatementGridRowClick;
+        event EventHandler OnStatementShown;
         void BindStatements(BindingList<StatementGridItemModel> listaExtrase);
         void BindTransactions(BindingList<TransactionGridItemModel> listaTranzactii);
         void Show();
         void CloseStatementForm();
-        event FormClosedEventHandler WhenStatementFormClosed;
+        event FormClosedEventHandler OnStatementFormClosing;
         void ActivateStatementForm();
         void SetMdiParent(Form mdiParent);
-        event EventHandler ActiveStatementForm;
+        event EventHandler OnStatementFormActivating;
     }
 }

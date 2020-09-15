@@ -20,10 +20,10 @@ namespace BankStatementReader
             _statementForm = statementForm;
             _extrasParserFactory = extrasParserFactory;
             _dialogService = dialogService;
-            _statementForm.StatementShown += WhenStatementFormShown;
-            _statementForm.StatementGridRowClicked += StatementGridRowClick;
-            _statementForm.WhenStatementFormClosed += AfterStatementFormClosed;
-            _statementForm.ActiveStatementForm += ActiveStatments;
+            _statementForm.OnStatementShown += WhenStatementFormShown;
+            _statementForm.OnStatementGridRowClick += StatementGridRowClick;
+            _statementForm.OnStatementFormClosing += AfterStatementFormClosed;
+            _statementForm.OnStatementFormActivating += ActiveStatments;
         }
 
         private void ActiveStatments(object sender, EventArgs e)
@@ -77,11 +77,6 @@ namespace BankStatementReader
             }
         }
 
-        public void CloseStatementFile(StatementForm statementForm)
-        {
-            statementForm.CloseStatementForm();
-        }
-
         private void StatementGridRowClick(object sender, RowClickEventArgs e)
         {
             int rowHandle = e.RowHandle;
@@ -125,7 +120,6 @@ namespace BankStatementReader
 
     public interface IStatementFormPresenter
     {
-        List<Extras> CreateRuntimeExtrasList(string numeFisier);
         void SetMdiParent(Form mdiParent);
     }
 }

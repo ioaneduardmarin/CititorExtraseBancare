@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.openButton = new System.Windows.Forms.ToolStripButton();
             this.windowButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.openButton = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -52,14 +52,6 @@
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // openButton
-            // 
-            this.openButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.openButton.Image = ((System.Drawing.Image)(resources.GetObject("openButton.Image")));
-            this.openButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openButton.Name = "openButton";
-            this.openButton.Size = new System.Drawing.Size(23, 22);
-            // 
             // windowButton
             // 
             this.windowButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -67,6 +59,14 @@
             this.windowButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.windowButton.Name = "windowButton";
             this.windowButton.Size = new System.Drawing.Size(29, 22);
+            // 
+            // openButton
+            // 
+            this.openButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.openButton.Image = ((System.Drawing.Image)(resources.GetObject("openButton.Image")));
+            this.openButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openButton.Name = "openButton";
+            this.openButton.Size = new System.Drawing.Size(23, 22);
             // 
             // MainForm
             // 
@@ -88,8 +88,8 @@
         #endregion
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton openButton;
         private System.Windows.Forms.ToolStripDropDownButton windowButton;
+        private System.Windows.Forms.ToolStripButton openButton;
     }
 }
 

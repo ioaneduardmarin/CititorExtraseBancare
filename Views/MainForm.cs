@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace BankStatementReader
@@ -12,28 +11,16 @@ namespace BankStatementReader
             InitializeComponent();
         }
 
-        public event EventHandler OpenButtonClicked
+        public event EventHandler OnOpenButtonClick
         {
-            add
-            {
-                openButton.Click += value;
-            }
-            remove
-            {
-                openButton.Click -= value;
-            }
+            add => openButton.Click += value;
+            remove => openButton.Click -= value;
         }
 
-        public event EventHandler WindowButtonClicked
+        public event EventHandler OnWindowButtonClick
         {
-            add
-            {
-                windowButton.Click += value;
-            }
-            remove
-            {
-                windowButton.Click -= value;
-            }
+            add => windowButton.Click += value;
+            remove => windowButton.Click -= value;
         }
 
         public void WindowButtonClick(List<Tuple<string, object>> listStatementFormTagText)
@@ -52,11 +39,11 @@ namespace BankStatementReader
                     statementWindowItem.Tag = textTagTuple.Item2;
                 }
                 windowButton.DropDownItems.Add(statementWindowItem);
-                statementWindowItem.Click += WindowStatementClicked;
+                statementWindowItem.Click += OnWindowStatementClick;
             }
         }
 
-        public event EventHandler WindowStatementClicked;
+        public event EventHandler OnWindowStatementClick;
 
         public void ShowStatementForm(IStatementForm statementForm)
         {
@@ -72,42 +59,16 @@ namespace BankStatementReader
         {
             Text = "Bank Statement Reader " + activeStatement;
         }
-
-        public bool HasChildForms()
-        {
-            if (this.MdiChildren.Length > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public event EventHandler MainFormActivated
-        {
-            add
-            {
-                this.Activated += value;
-            }
-            remove
-            {
-                this.Activated -= value;
-            }
-        }
     }
 
     public interface IMainForm
     {
         void ShowStatementForm(IStatementForm statementForm);
-        event EventHandler OpenButtonClicked;
-        event EventHandler WindowButtonClicked;
+        event EventHandler OnOpenButtonClick;
+        event EventHandler OnWindowButtonClick;
         public void WindowButtonClick(List<Tuple<string,object>> listStatementFormPresenters);
-        public event EventHandler WindowStatementClicked;
+        public event EventHandler OnWindowStatementClick;
         Form GetForm();
         void RenameAfterActiveStatement(string activeStatement);
-        event EventHandler MainFormActivated;
-        bool HasChildForms();
     }
 }

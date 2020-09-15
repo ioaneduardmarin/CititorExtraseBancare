@@ -23,12 +23,12 @@ namespace BankStatementReader
             _statementFormPresenterFactory = statementFormPresenterFactory;
             _dialogService = dialogService;
             _extrasParserFactory = extrasParserFactory;
-            _mainForm.OpenButtonClicked += OnOpenButtonClick;
-            _mainForm.WindowButtonClicked += OnWindowButtonClick;
-            _mainForm.WindowStatementClicked += WindowStatementClickEvent;
-            EventAggregator.Instance.Subscribe<OpenStatementFormMessage>(e => WhenOpenStatementFormMessageSent(e.StatementFormPresenter, _listStatementFormTagText));
-            EventAggregator.Instance.Subscribe<ActiveStatementMessage>(e => ActiveStatementForm(e.StatementFormPresenter));
-            EventAggregator.Instance.Subscribe<CloseStatementFormMessage>(e => WhenCloseStatementMessageSent(e.StatementFormPresenter));
+            _mainForm.OnOpenButtonClick += OnOpenButtonClick;
+            _mainForm.OnWindowButtonClick += OnWindowButtonClick;
+            _mainForm.OnWindowStatementClick += WindowStatementClickEvent;
+            EventAggregator.Instance.Subscribe<OpenStatementFormMessage>(e => OnOpenStatementFormMessage(e.StatementFormPresenter, _listStatementFormTagText));
+            EventAggregator.Instance.Subscribe<ActiveStatementMessage>(e => OnStatementFormActivated(e.StatementFormPresenter));
+            EventAggregator.Instance.Subscribe<CloseStatementFormMessage>(e => OnCloseStatementMessage(e.StatementFormPresenter));
         }
 
         private void ResetMainForm()
@@ -44,13 +44,13 @@ namespace BankStatementReader
             _mainForm.WindowButtonClick(_listStatementFormTagText);
         }
 
-        public void WhenOpenStatementFormMessageSent(StatementFormPresenter statementFormPresenter, List<Tuple<string, object>> listStatementFormTagText)
+        public void OnOpenStatementFormMessage(StatementFormPresenter statementFormPresenter, List<Tuple<string, object>> listStatementFormTagText)
         {
             UpdateStatmentPresenterList(statementFormPresenter);
             _mainForm.WindowButtonClick(_listStatementFormTagText);
         }
 
-        public void WhenCloseStatementMessageSent(StatementFormPresenter statementFormPresenter)
+        public void OnCloseStatementMessage(StatementFormPresenter statementFormPresenter)
         {
             _listStatementFormPresenters.Remove(statementFormPresenter);
             var textTagStatementFormPresenterTuple = new Tuple<string, object>(statementFormPresenter.GetStatementFormName()
@@ -91,7 +91,7 @@ namespace BankStatementReader
             EventAggregator.Instance.Publish(new ActiveStatementMessage(statementFormPresenter));
         }
 
-        public void ActiveStatementForm(StatementFormPresenter statementFormPresenter)
+        public void OnStatementFormActivated(StatementFormPresenter statementFormPresenter)
         {
             string statementFormName = statementFormPresenter.GetStatementFormName()
                  .Substring(statementFormPresenter.GetStatementFormName().LastIndexOf('\\') + 1);
