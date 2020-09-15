@@ -71,24 +71,24 @@
     <Compile Include="Parser\Extras.cs" />
     <Compile Include="Parser\ExtrasParser.cs" />
     <Compile Include="BusinessLogic\MainFormPresenter.cs" />
-    <Compile Include="Views\MainForm%28Parent%29.cs">
+    <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\MainForm%28Parent%29.Designer.cs">
-      <DependentUpon>MainForm%28Parent%29.cs</DependentUpon>
+    <Compile Include="Views\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\StatementsForm%28Child%29.cs">
+    <Compile Include="Views\StatementForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\.Designer.cs">
-      <DependentUpon>StatementsForm%28Child%29.cs</DependentUpon>
+      <DependentUpon>StatementForm.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parser\Tranzactie.cs" />
-    <EmbeddedResource Include="Views\MainForm%28Parent%29.resx">
-      <DependentUpon>MainForm%28Parent%29.cs</DependentUpon>
+    <EmbeddedResource Include="Views\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -100,8 +100,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Views\StatementsForm%28Child%29.resx">
-      <DependentUpon>StatementsForm%28Child%29.cs</DependentUpon>
+    <EmbeddedResource Include="Views\StatementForm.resx">
+      <DependentUpon>StatementForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\DataSources\BankStatementReader.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\BankStatementReader.Properties.Settings.datasource" />
