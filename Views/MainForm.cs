@@ -23,6 +23,12 @@ namespace BankStatementReader
             remove => windowButton.Click -= value;
         }
 
+        public event EventHandler OnMainFormLoad
+        {
+            add => this.Load += value;
+            remove => this.Load += value;
+        }
+
         public void WindowButtonClick(List<Tuple<string, object>> listStatementFormTagText)
         {
             if (windowButton.DropDownItems.Count > 0)
@@ -40,6 +46,18 @@ namespace BankStatementReader
                 }
                 windowButton.DropDownItems.Add(statementWindowItem);
                 statementWindowItem.Click += OnWindowStatementClick;
+            }
+        }
+
+        public void DisableWindowButton(bool windowButtonEnable)
+        {
+            if (!windowButtonEnable)
+            {
+                windowButton.Enabled = false;
+            }
+            else
+            {
+                windowButton.Enabled = true;
             }
         }
 
@@ -70,5 +88,7 @@ namespace BankStatementReader
         public event EventHandler OnWindowStatementClick;
         Form GetForm();
         void RenameAfterActiveStatement(string activeStatement);
+        event EventHandler OnMainFormLoad;
+        void DisableWindowButton(bool windowButtonEnable);
     }
 }

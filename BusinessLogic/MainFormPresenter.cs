@@ -26,9 +26,15 @@ namespace BankStatementReader
             _mainForm.OnOpenButtonClick += OnOpenButtonClick;
             _mainForm.OnWindowButtonClick += OnWindowButtonClick;
             _mainForm.OnWindowStatementClick += WindowStatementClickEvent;
+            _mainForm.OnMainFormLoad += MainFormLoad;
             EventAggregator.Instance.Subscribe<OpenStatementFormMessage>(e => OnOpenStatementFormMessage(e.StatementFormPresenter, _listStatementFormTagText));
             EventAggregator.Instance.Subscribe<ActiveStatementMessage>(e => OnStatementFormActivated(e.StatementFormPresenter));
             EventAggregator.Instance.Subscribe<CloseStatementFormMessage>(e => OnCloseStatementMessage(e.StatementFormPresenter));
+        }
+
+        private void MainFormLoad(object sender, EventArgs e)
+        {
+            _mainForm.DisableWindowButton(false);
         }
 
         private void ResetMainForm()
@@ -36,6 +42,7 @@ namespace BankStatementReader
             if (_listStatementFormPresenters.Count == 0)
             {
                 _mainForm.RenameAfterActiveStatement("");
+                _mainForm.DisableWindowButton(false);
             }
         }
 
@@ -47,6 +54,7 @@ namespace BankStatementReader
         public void OnOpenStatementFormMessage(StatementFormPresenter statementFormPresenter, List<Tuple<string, object>> listStatementFormTagText)
         {
             UpdateStatmentPresenterList(statementFormPresenter);
+            _mainForm.DisableWindowButton(true);
             _mainForm.WindowButtonClick(_listStatementFormTagText);
         }
 
