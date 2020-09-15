@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankStatementReader
 {
-    class TransactionGridItemModel
+    public class TransactionGridItemModel
     {
         public int TranzactieId { get; set; }
         public DateTime DataTranzactie { get; set; }

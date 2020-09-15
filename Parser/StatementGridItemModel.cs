@@ -1,6 +1,6 @@
 ﻿namespace BankStatementReader
 {
-    class StatementGridItemModel
+    public class StatementGridItemModel
     {
         //SGIM=StatementGridItemModel
         public int Id { get; }
