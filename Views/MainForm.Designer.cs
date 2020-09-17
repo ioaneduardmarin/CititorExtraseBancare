@@ -31,8 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.windowButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.openButton = new System.Windows.Forms.ToolStripButton();
+            this.windowButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.previewReportButton = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -45,20 +46,13 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openButton,
-            this.windowButton});
+            this.windowButton,
+            this.previewReportButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(800, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // windowButton
-            // 
-            this.windowButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.windowButton.Image = ((System.Drawing.Image)(resources.GetObject("windowButton.Image")));
-            this.windowButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.windowButton.Name = "windowButton";
-            this.windowButton.Size = new System.Drawing.Size(29, 22);
             // 
             // openButton
             // 
@@ -67,6 +61,25 @@
             this.openButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(23, 22);
+            this.openButton.Text = "Open Statement";
+            // 
+            // windowButton
+            // 
+            this.windowButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.windowButton.Image = ((System.Drawing.Image)(resources.GetObject("windowButton.Image")));
+            this.windowButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.windowButton.Name = "windowButton";
+            this.windowButton.Size = new System.Drawing.Size(29, 22);
+            this.windowButton.Text = "Opened Statements";
+            // 
+            // previewReportButton
+            // 
+            this.previewReportButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.previewReportButton.Image = ((System.Drawing.Image)(resources.GetObject("previewReportButton.Image")));
+            this.previewReportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.previewReportButton.Name = "previewReportButton";
+            this.previewReportButton.Size = new System.Drawing.Size(23, 22);
+            this.previewReportButton.Text = "Preview Data";
             // 
             // MainForm
             // 
@@ -90,6 +103,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton windowButton;
         private System.Windows.Forms.ToolStripButton openButton;
+        private System.Windows.Forms.ToolStripButton previewReportButton;
     }
 }
 

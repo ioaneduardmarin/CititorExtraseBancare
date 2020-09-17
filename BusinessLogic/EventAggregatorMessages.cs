@@ -33,6 +33,15 @@ namespace BankStatementReader
         }
         public StatementFormPresenter StatementFormPresenter { get; private set; }
     }
+
+    class PreviewStatementMessage : IApplicationEvent
+    {
+        public PreviewStatementMessage(StatementFormPresenter statementFormPresenter)
+        {
+            StatementFormPresenter = statementFormPresenter;
+        }
+        public StatementFormPresenter StatementFormPresenter { get; private set; }
+    }
 }
 
 

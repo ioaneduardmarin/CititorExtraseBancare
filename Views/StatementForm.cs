@@ -12,6 +12,7 @@ namespace BankStatementReader
             InitializeComponent();
         }
 
+        public bool IsActive { get; }
         public void BindStatements(BindingList<StatementGridItemModel> listaExtrase)
         {
             StatementsGrid.DataSource = listaExtrase;
@@ -75,5 +76,6 @@ namespace BankStatementReader
         void ActivateStatementForm();
         void SetMdiParent(Form mdiParent);
         event EventHandler OnStatementFormActivating;
+        bool IsActive { get; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using BankStatementReader.Parser;
 
 namespace BankStatementReader
 {
@@ -16,12 +17,14 @@ namespace BankStatementReader
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUhandledException;
 
             var mainForm = new MainForm();
+            IStatementReport statementReport= new StatementReport();
             IStatementFormFactory statementFormFactory = new StatementFormFactory();
             IExtrasParserFactory extrasParserFactory = new ExtrasParserFactory();
             IStatementFormPresenterFactory statementFormPresenterFactory = new StatementFormPresenterFactory();
             IDialogService dialogService = new DialogService();
             IMainFormPresenterFactory mainFormPresenterFactory = new MainFormPresenterFactory();
-            var presenter = mainFormPresenterFactory.Create(mainForm, statementFormFactory, statementFormPresenterFactory, dialogService, extrasParserFactory);
+            IReportBuilder reportBuilder= new ReportBuilder(dialogService, statementReport);
+            var presenter = mainFormPresenterFactory.Create(mainForm, statementFormFactory, statementFormPresenterFactory, dialogService, extrasParserFactory, reportBuilder);
             Application.Run(mainForm);
 
 

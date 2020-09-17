@@ -14,6 +14,7 @@ namespace BankStatementReader
         public decimal SumaTranzactie { get; set; }
         public string TipTranzactie { get; set; }
         public string? InformatiiPentruClient { get; set; }
+        public string? ReferintaClient { get; set; }
 
         public TransactionGridItemModel(Tranzactie tranzactie)
         {
@@ -22,6 +23,7 @@ namespace BankStatementReader
             this.CodTranzactie = tranzactie.CodTranzactie;
             this.SumaTranzactie = tranzactie.SumaTranzactie;
             this.TipTranzactie = tranzactie.TipTranzactie;
+            this.ReferintaClient = tranzactie.ReferintaClient;
             this.InformatiiPentruClient = tranzactie.InformatiiPentruClient;
         }
     }

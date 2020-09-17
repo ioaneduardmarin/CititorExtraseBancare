@@ -29,6 +29,12 @@ namespace BankStatementReader
             remove => this.Load += value;
         }
 
+        public event EventHandler OnPreviewReportButton
+        {
+            add => previewReportButton.Click += value;
+            remove => previewReportButton.Click -= value;
+        }
+
         public void CreateWindowDropDownList(List<Tuple<string, object>> listStatementFormTagText)
         {
             if (windowButton.DropDownItems.Count > 0)
@@ -61,6 +67,18 @@ namespace BankStatementReader
             }
         }
 
+        public void SetPreviewButtonEnabledState(bool previewButtonEnable)
+        {
+            if (!previewButtonEnable)
+            {
+                previewReportButton.Enabled = false;
+            }
+            else
+            {
+                previewReportButton.Enabled = true;
+            }
+        }
+
         public event EventHandler OnWindowStatementClick;
 
         public void ShowStatementForm(IStatementForm statementForm)
@@ -90,5 +108,7 @@ namespace BankStatementReader
         void SetMainFormTitle(string activeStatement);
         event EventHandler OnMainFormLoad;
         void SetWindowsListDropDownEnabledState(bool windowButtonEnable);
+        event EventHandler OnPreviewReportButton;
+        void SetPreviewButtonEnabledState(bool previewButtonEnable);
     }
 }
