@@ -35,7 +35,7 @@ namespace BankStatementReader
             EventAggregator.Instance.Subscribe<OpenStatementFormMessage>(e => OnOpenStatementFormMessage(e.StatementFormPresenter, _listStatementFormTagText));
             EventAggregator.Instance.Subscribe<ActiveStatementMessage>(e => OnStatementFormActivated(e.StatementFormPresenter));
             EventAggregator.Instance.Subscribe<CloseStatementFormMessage>(e => OnCloseStatementMessage(e.StatementFormPresenter));
-            EventAggregator.Instance.Subscribe<PreviewStatementMessage>(e=> OnPreviewReportButtonPushed(e.StatementFormPresenter));
+            EventAggregator.Instance.Subscribe<PreviewStatementMessage>(e => OnPreviewReportButtonPushed(e.StatementFormPresenter));
         }
 
         private void OnMainFormLoad(object sender, EventArgs e)
@@ -92,7 +92,7 @@ namespace BankStatementReader
             {
                 var statementForm = _statementFormFactory.Create();
                 statementForm.Text = _numeFisier;
-                var statementFormPresenter = _statementFormPresenterFactory.Create(_extrasParserFactory, statementForm, _dialogService,_reportBuilder);
+                var statementFormPresenter = _statementFormPresenterFactory.Create(_extrasParserFactory, statementForm, _dialogService, _reportBuilder);
                 statementFormPresenter.SetMdiParent(_mainForm.GetForm());
                 _mainForm.CreateWindowDropDownList(_listStatementFormTagText);
                 EventAggregator.Instance.Publish(new OpenStatementFormMessage((StatementFormPresenter)statementFormPresenter));
@@ -114,7 +114,6 @@ namespace BankStatementReader
             string statementFormName = statementFormPresenter.GetStatementFormName()
                  .Substring(statementFormPresenter.GetStatementFormName().LastIndexOf('\\') + 1);
             _mainForm.SetMainFormTitle(statementFormName);
-
         }
 
         private void OnPreviewReportButtonClick(object sender, EventArgs e)
@@ -124,7 +123,7 @@ namespace BankStatementReader
 
         private void OnPreviewReportButtonPushed(StatementFormPresenter statementFormPresenter)
         {
-            var report=statementFormPresenter.CreateReport();
+            var report = statementFormPresenter.CreateReport();
             _reportBuilder.ShowReport(report);
         }
     }

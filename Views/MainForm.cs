@@ -102,7 +102,7 @@ namespace BankStatementReader
         void ShowStatementForm(IStatementForm statementForm);
         event EventHandler OnOpenButtonClick;
         event EventHandler OnWindowButtonClick;
-        public void CreateWindowDropDownList(List<Tuple<string,object>> listStatementFormPresenters);
+        public void CreateWindowDropDownList(List<Tuple<string, object>> listStatementFormPresenters);
         public event EventHandler OnWindowStatementClick;
         Form GetForm();
         void SetMainFormTitle(string activeStatement);

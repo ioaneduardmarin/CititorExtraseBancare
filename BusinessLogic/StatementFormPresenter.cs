@@ -120,7 +120,7 @@ namespace BankStatementReader
             }
             return listaTranzactii;
         }
-       
+
         public void CreateReportBindingList(List<Extras> listaExtrase)
         {
             BindingList<ReportDataSource> listaExtraseReport = new BindingList<ReportDataSource>();

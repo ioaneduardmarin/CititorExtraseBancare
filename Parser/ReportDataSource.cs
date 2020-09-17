@@ -15,7 +15,7 @@ namespace BankStatementReader.Parser
         public decimal SumaSoldInitial { get; }
         public decimal SumaSoldFinalRezervat { get; }
         public string ValutaCont { get; }
-        public List<Tranzactie> Tranzactii { get; }= new List<Tranzactie>();
+        public List<Tranzactie> Tranzactii { get; } = new List<Tranzactie>();
 
         public ReportDataSource(Extras extras)
         {

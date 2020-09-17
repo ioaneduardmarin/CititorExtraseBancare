@@ -26,7 +26,7 @@ namespace BankStatementReader.Parser
 
         public void ShowReport(StatementReport statementReport)
         {
-            ReportPrintTool printTool= new ReportPrintTool(statementReport);
+            ReportPrintTool printTool = new ReportPrintTool(statementReport);
             printTool.ShowRibbonPreview();
         }
     }
