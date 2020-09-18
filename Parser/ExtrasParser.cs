@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BankStatementReader
 {
@@ -40,15 +41,15 @@ namespace BankStatementReader
                 _extras.CodSoldInitial = sir.Substring(0, 1);
                 _extras.DataSoldInitial = (DateTime.ParseExact("20" + sir.Substring(1, 6), "yyyyMMdd", null));
                 _extras.ValutaSoldInitial = sir.Substring(7, 3);
-                _extras.SumaSoldInitial = Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100;
-                _extras.InformatiiPentruClientSoldInitial = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "\r\n");
+                _extras.SumaSoldInitial = Decimal.Parse((Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100).ToString("0.00"));
+                _extras.InformatiiPentruClientSoldInitial = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "   ");
             }
             else
             {
                 _extras.CodSoldInitial = sir.Substring(0, 1);
                 _extras.DataSoldInitial = (DateTime.ParseExact("20" + sir.Substring(1, 6), "yyyyMMdd", null));
                 _extras.ValutaSoldInitial = sir.Substring(7, 3);
-                _extras.SumaSoldInitial = Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100;
+                _extras.SumaSoldInitial = Decimal.Parse((Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100).ToString("0.00"));
                 _extras.InformatiiPentruClientSoldInitial = "";
             }
             return _extras;
@@ -61,25 +62,50 @@ namespace BankStatementReader
             tranzactie.TranzactieId = _tranzactieId;
             if (sir.IndexOf(":86:") - sir.IndexOf("/") <= 52)
             {
-                tranzactie.DataTranzactie = (DateTime.ParseExact("20" + sir.Substring(0, 6), "yyyyMMdd", null)).Date;
+                tranzactie.DataValutei = (DateTime.ParseExact("20" + sir.Substring(0, 6), "yyyyMMdd", null)).Date;
+                tranzactie.DataTranzactie = GetTransactionDate(tranzactie.DataValutei, sir.Substring(6, 4), _extras.DataSoldInitial);
                 tranzactie.CodTranzactie = sir.Substring(10, 1);
-                tranzactie.SumaTranzactie = Convert.ToDecimal(sir.Substring(11, sir.IndexOf(',') - 11) + sir.Substring(sir.IndexOf(','), 3)) / 100;
+                tranzactie.SumaTranzactie = Decimal.Parse((Convert.ToDecimal((sir.Substring(11, sir.IndexOf(',') - 11) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100).ToString("0.00"));
                 tranzactie.TipTranzactie = sir.Substring(sir.IndexOf(',') + 3, 4);
                 tranzactie.ReferintaClient = sir.Substring(sir.IndexOf(',') + 7, 16);
                 tranzactie.DetaliiTranzactie = "";
-                tranzactie.InformatiiPentruClient = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "\r\n");
+                tranzactie.InformatiiPentruClient = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "    ");
             }
             else
             {
-                tranzactie.DataTranzactie = (DateTime.ParseExact("20" + sir.Substring(0, 6), "yyyyMMdd", null)).Date;
+                tranzactie.DataValutei = (DateTime.ParseExact("20" + sir.Substring(0, 6), "yyyyMMdd", null)).Date;
+                tranzactie.DataTranzactie = GetTransactionDate(tranzactie.DataValutei, sir.Substring(6, 4), _extras.DataSoldInitial);
                 tranzactie.CodTranzactie = sir.Substring(10, 1);
-                tranzactie.SumaTranzactie = Convert.ToDecimal(sir.Substring(11, sir.IndexOf(',') - 11) + sir.Substring(sir.IndexOf(','), 3)) / 100;
+                tranzactie.SumaTranzactie = Decimal.Parse((Convert.ToDecimal((sir.Substring(11, sir.IndexOf(',') - 11) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100).ToString("0.00"));
                 tranzactie.TipTranzactie = sir.Substring(sir.IndexOf(',') + 3, 4);
                 tranzactie.ReferintaClient = sir.Substring(sir.IndexOf(',') + 7, 16);
                 tranzactie.DetaliiTranzactie = sir.Substring(sir.IndexOf(',') + 74, sir.IndexOf(":86:") - sir.IndexOf(',') + 74);
-                tranzactie.InformatiiPentruClient = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "\r\n");
+                tranzactie.InformatiiPentruClient = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "    ");
             }
             return tranzactie;
+        }
+
+        private DateTime GetTransactionDate(DateTime tranzactieDataValutei, string substring, DateTime dataSoldInitial)
+        {
+            List<int> listTransactionDate = new List<int>();
+            var previousYearEntryDate = Convert.ToInt32(Convert.ToString(tranzactieDataValutei.Year - 1) + substring);
+            var currentYearEntryDate = Convert.ToInt32(Convert.ToString(tranzactieDataValutei.Year) + substring);
+            var nextYearEntryDate = Convert.ToInt32(Convert.ToString(tranzactieDataValutei.Year + 1) + substring);
+            listTransactionDate.Add(Math.Abs(previousYearEntryDate - Convert.ToInt32(Convert.ToString(dataSoldInitial.Year)+ Convert.ToString(dataSoldInitial.Month)+ Convert.ToString(dataSoldInitial.Day))));
+            listTransactionDate.Add(Math.Abs(currentYearEntryDate - Convert.ToInt32(Convert.ToString(dataSoldInitial.Year) + Convert.ToString(dataSoldInitial.Month) + Convert.ToString(dataSoldInitial.Day))));
+            listTransactionDate.Add(Math.Abs(nextYearEntryDate - Convert.ToInt32(Convert.ToString(dataSoldInitial.Year) + Convert.ToString(dataSoldInitial.Month) + Convert.ToString(dataSoldInitial.Day))));
+            if (listTransactionDate.Min() == listTransactionDate[0])
+            {
+                return DateTime.ParseExact(Convert.ToString(previousYearEntryDate), "yyyyMMdd", null).Date;
+            }
+            else if (listTransactionDate.Min() == listTransactionDate[1])
+            {
+                return DateTime.ParseExact(Convert.ToString(currentYearEntryDate), "yyyyMMdd", null).Date;
+            }
+            else
+            {
+                return DateTime.ParseExact(Convert.ToString(nextYearEntryDate), "yyyyMMdd", null).Date;
+            }
         }
 
         public Extras Tag62(string sir)
@@ -89,15 +115,15 @@ namespace BankStatementReader
                 _extras.CodSoldFinalRezervat = sir.Substring(0, 1);
                 _extras.DataSoldRezervat = (DateTime.ParseExact("20" + sir.Substring(1, 6), "yyyyMMdd", null)).Date;
                 _extras.ValutaSoldRezervat = sir.Substring(7, 3);
-                _extras.SumaSoldRezervat = Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100;
-                _extras.InformatiiPentruClientSoldRezervat = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "\r\n");
+                _extras.SumaSoldRezervat = Decimal.Parse((Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100).ToString("0.00"));
+                _extras.InformatiiPentruClientSoldRezervat = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "   ");
             }
             else
             {
                 _extras.CodSoldFinalRezervat = sir.Substring(0, 1);
                 _extras.DataSoldRezervat = (DateTime.ParseExact("20" + sir.Substring(1, 6), "yyyyMMdd", null)).Date;
                 _extras.ValutaSoldRezervat = sir.Substring(7, 3);
-                _extras.SumaSoldRezervat = Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100;
+                _extras.SumaSoldRezervat = Decimal.Parse((Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100).ToString("0.00"));
                 _extras.InformatiiPentruClientSoldRezervat = "";
             }
             return _extras;
@@ -110,15 +136,15 @@ namespace BankStatementReader
                 _extras.CodSoldFinalDisponibil = sir.Substring(0, 1);
                 _extras.DataSoldFinalDisponibil = (DateTime.ParseExact("20" + sir.Substring(1, 6), "yyyyMMdd", null)).Date;
                 _extras.ValutaSoldFinalDisponibil = sir.Substring(7, 3);
-                _extras.SumaSoldFinalDisponibil = Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100;
-                _extras.InformatiiPentruClientSoldFinalDisponibil = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "\r\n");
+                _extras.SumaSoldFinalDisponibil = Decimal.Parse((Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100).ToString("0.00"));
+                _extras.InformatiiPentruClientSoldFinalDisponibil = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "    ");
             }
             else
             {
                 _extras.CodSoldFinalDisponibil = sir.Substring(0, 1);
                 _extras.DataSoldFinalDisponibil = (DateTime.ParseExact("20" + sir.Substring(1, 6), "yyyyMMdd", null)).Date;
                 _extras.ValutaSoldFinalDisponibil = sir.Substring(7, 3);
-                _extras.SumaSoldFinalDisponibil = Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100;
+                _extras.SumaSoldFinalDisponibil = Decimal.Parse((Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100).ToString("0.00"));
                 _extras.InformatiiPentruClientSoldFinalDisponibil = "";
             }
             return _extras;
@@ -131,15 +157,15 @@ namespace BankStatementReader
                 _extras.CodSoldDisponibil = sir.Substring(0, 1);
                 _extras.DataSoldDisponibil = (DateTime.ParseExact("20" + sir.Substring(1, 6), "yyyyMMdd", null)).Date;
                 _extras.ValutaSoldDisponibil = sir.Substring(7, 3);
-                _extras.SumaSoldDisponibil = Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100;
-                _extras.InformatiiPentruClientSoldDisponibil = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "\r\n");
+                _extras.SumaSoldDisponibil = Decimal.Parse((Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100).ToString("0.00"));
+                _extras.InformatiiPentruClientSoldDisponibil = sir.Substring(sir.IndexOf(":86:") + 4).Replace(":86:", "     ");
             }
             else
             {
                 _extras.CodSoldDisponibil = sir.Substring(0, 1);
                 _extras.DataSoldDisponibil = (DateTime.ParseExact("20" + sir.Substring(1, 6), "yyyyMMdd", null)).Date;
                 _extras.ValutaSoldDisponibil = sir.Substring(7, 3);
-                _extras.SumaSoldDisponibil = Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100;
+                _extras.SumaSoldDisponibil = Decimal.Parse((Convert.ToDecimal((sir.Substring(10, sir.IndexOf(',') - 10) + sir.Substring(sir.IndexOf(','), 3)).Replace("\n", "").Replace("\r", "")) / 100).ToString("0.00"));
                 _extras.InformatiiPentruClientSoldDisponibil = "";
             }
             return _extras;

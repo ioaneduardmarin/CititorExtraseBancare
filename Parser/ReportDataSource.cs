@@ -14,7 +14,9 @@ namespace BankStatementReader.Parser
         public string NumarExtras { get; }
         public decimal SumaSoldInitial { get; }
         public decimal SumaSoldFinalRezervat { get; }
+        public decimal? SumaSoldFinalDisponibil { get; }
         public string ValutaCont { get; }
+        public DateTime DataExtras { get; }
         public List<Tranzactie> Tranzactii { get; } = new List<Tranzactie>();
 
         public ReportDataSource(Extras extras)
@@ -25,7 +27,9 @@ namespace BankStatementReader.Parser
             NumarExtras = extras.NrExtras;
             SumaSoldInitial = extras.SumaSoldInitial;
             SumaSoldFinalRezervat = extras.SumaSoldRezervat;
-            this.Tranzactii = extras.Tranzactii;
+            SumaSoldFinalDisponibil = extras.SumaSoldFinalDisponibil;
+            Tranzactii = extras.Tranzactii;
+            DataExtras = extras.DataSoldInitial;
             ValutaCont = extras.ValutaSoldInitial;
         }
     }
