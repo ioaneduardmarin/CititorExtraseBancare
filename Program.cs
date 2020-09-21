@@ -24,7 +24,7 @@ namespace BankStatementReader
             IDialogService dialogService = new DialogService();
             IMainFormPresenterFactory mainFormPresenterFactory = new MainFormPresenterFactory();
             IReportBuilder reportBuilder= new ReportBuilder();
-            var presenter = mainFormPresenterFactory.Create(mainForm, statementFormFactory, statementFormPresenterFactory, dialogService, extrasParserFactory, reportBuilder);
+            var mainFormPresenter = mainFormPresenterFactory.Create(mainForm, statementFormFactory, statementFormPresenterFactory, dialogService, extrasParserFactory, reportBuilder);
             Application.Run(mainForm);
 
             void CurrentDomainOnUhandledException(object sender, UnhandledExceptionEventArgs e)

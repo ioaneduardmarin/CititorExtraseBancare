@@ -11,21 +11,21 @@ namespace BankStatementReader
         private int _extrasId = 0;
         private int _tranzactieId = 0;
 
-        public Extras Tag20(string sir)
+        public Extras ParseLineWithTag20(string sir)
         {
             sir = sir.Replace("\n", "").Replace("\r", "");
             _extras.NumarReferinta = sir;
             return _extras;
         }
 
-        public Extras Tag25(string sir)
+        public Extras ParseLineWithTag25(string sir)
         {
             string iban = sir;
             _extras.Iban = iban.Replace("\n", "").Replace("\r", "");
             return _extras;
         }
 
-        public Extras Tag28(string sir)
+        public Extras ParseLineWithTag28(string sir)
         {
             sir = sir.Replace("\n", "").Replace("\r", "");
             _extras.NrExtras = sir.Substring(0, 5);
@@ -34,7 +34,7 @@ namespace BankStatementReader
             return _extras;
         }
 
-        public Extras Tag60(string sir)
+        public Extras ParseLineWithTag60(string sir)
         {
             if (sir.Contains(":86:"))
             {
@@ -55,7 +55,7 @@ namespace BankStatementReader
             return _extras;
         }
 
-        public Tranzactie Tag61(string sir)
+        public Tranzactie ParseLineWithTag61(string sir)
         {
             Tranzactie tranzactie = new Tranzactie();
             _tranzactieId += 1;
@@ -85,12 +85,12 @@ namespace BankStatementReader
             return tranzactie;
         }
 
-        private DateTime GetTransactionDate(DateTime tranzactieDataValutei, string substring, DateTime dataSoldInitial)
+        private DateTime GetTransactionDate(DateTime tranzactieDataValutei, string dataExtrasa, DateTime dataSoldInitial)
         {
             List<int> listTransactionDate = new List<int>();
-            var previousYearEntryDate = Convert.ToInt32(Convert.ToString(tranzactieDataValutei.Year - 1) + substring);
-            var currentYearEntryDate = Convert.ToInt32(Convert.ToString(tranzactieDataValutei.Year) + substring);
-            var nextYearEntryDate = Convert.ToInt32(Convert.ToString(tranzactieDataValutei.Year + 1) + substring);
+            var previousYearEntryDate = Convert.ToInt32(Convert.ToString(tranzactieDataValutei.Year - 1) + dataExtrasa);
+            var currentYearEntryDate = Convert.ToInt32(Convert.ToString(tranzactieDataValutei.Year) + dataExtrasa);
+            var nextYearEntryDate = Convert.ToInt32(Convert.ToString(tranzactieDataValutei.Year + 1) + dataExtrasa);
             listTransactionDate.Add(Math.Abs(previousYearEntryDate - Convert.ToInt32(Convert.ToString(dataSoldInitial.Year)+ Convert.ToString(dataSoldInitial.Month)+ Convert.ToString(dataSoldInitial.Day))));
             listTransactionDate.Add(Math.Abs(currentYearEntryDate - Convert.ToInt32(Convert.ToString(dataSoldInitial.Year) + Convert.ToString(dataSoldInitial.Month) + Convert.ToString(dataSoldInitial.Day))));
             listTransactionDate.Add(Math.Abs(nextYearEntryDate - Convert.ToInt32(Convert.ToString(dataSoldInitial.Year) + Convert.ToString(dataSoldInitial.Month) + Convert.ToString(dataSoldInitial.Day))));
@@ -108,7 +108,7 @@ namespace BankStatementReader
             }
         }
 
-        public Extras Tag62(string sir)
+        public Extras ParseLineWithTag62(string sir)
         {
             if (sir.Contains(":86:"))
             {
@@ -129,7 +129,7 @@ namespace BankStatementReader
             return _extras;
         }
 
-        public Extras Tag64(string sir)
+        public Extras ParseLineWithTag64(string sir)
         {
             if (sir.Contains(":86:"))
             {
@@ -150,7 +150,7 @@ namespace BankStatementReader
             return _extras;
         }
 
-        public Extras Tag65(string sir)
+        public Extras ParseLineWithTag65(string sir)
         {
             if (sir.Contains(":86:"))
             {
@@ -171,77 +171,77 @@ namespace BankStatementReader
             return _extras;
         }
 
-        public Extras InternalParse(string[] liniiIntrare, int indexLiniePrimita)
+        public Extras InternalParse(string[] randuriFisier, int inderRandPrimit)
         {
             _extras = new Extras();
             string randNetichetat = "";
             bool isExtrasValid = false;
 
 
-            for (; indexLiniePrimita < liniiIntrare.Length; indexLiniePrimita += 1)
+            for (; inderRandPrimit < randuriFisier.Length; inderRandPrimit += 1)
             {
-                if (!String.IsNullOrEmpty(liniiIntrare[indexLiniePrimita]))
+                if (!String.IsNullOrEmpty(randuriFisier[inderRandPrimit]))
                 {
                     break;
                 }
             }
 
-            for (int linieCurenta = indexLiniePrimita; linieCurenta < liniiIntrare.Length; linieCurenta += 1)
+            for (int indexRandCurent = inderRandPrimit; indexRandCurent < randuriFisier.Length; indexRandCurent += 1)
             {
-                if (liniiIntrare[linieCurenta].StartsWith(":20:"))
+                if (randuriFisier[indexRandCurent].StartsWith(":20:"))
                 {
                     isExtrasValid = true;
-                    Tag20(liniiIntrare[linieCurenta].Substring(4));
+                    ParseLineWithTag20(randuriFisier[indexRandCurent].Substring(4));
                 }
 
-                if (liniiIntrare[linieCurenta].StartsWith(":25:"))
+                if (randuriFisier[indexRandCurent].StartsWith(":25:"))
                 {
-                    Tag25(liniiIntrare[linieCurenta].Substring(4));
+                    ParseLineWithTag25(randuriFisier[indexRandCurent].Substring(4));
                 }
 
-                if (liniiIntrare[linieCurenta].StartsWith(":28C:"))
+                if (randuriFisier[indexRandCurent].StartsWith(":28C:"))
                 {
-                    Tag28(liniiIntrare[linieCurenta].Substring(5));
+                    ParseLineWithTag28(randuriFisier[indexRandCurent].Substring(5));
                 }
 
-                if (liniiIntrare[linieCurenta].StartsWith(":60F:"))
+                if (randuriFisier[indexRandCurent].StartsWith(":60F:"))
                 {
-                    randNetichetat = ConcatenareRanduriDetalii(liniiIntrare, linieCurenta);
-                    liniiIntrare[linieCurenta] = liniiIntrare[linieCurenta] + randNetichetat;
-                    Tag60(liniiIntrare[linieCurenta].Substring(5));
+                    randNetichetat = ConcatenareRanduriDetalii(randuriFisier, indexRandCurent);
+                    randuriFisier[indexRandCurent] = randuriFisier[indexRandCurent] + randNetichetat;
+                    ParseLineWithTag60(randuriFisier[indexRandCurent].Substring(5));
                 }
 
-                if (liniiIntrare[linieCurenta].StartsWith(":61:"))
+                if (randuriFisier[indexRandCurent].StartsWith(":61:"))
                 {
-                    randNetichetat = ConcatenareRanduriDetalii(liniiIntrare, linieCurenta);
-                    liniiIntrare[linieCurenta] = liniiIntrare[linieCurenta] + randNetichetat;
-                    _extras.Tranzactii.Add(Tag61(liniiIntrare[linieCurenta].Substring(4)));
+                    randNetichetat = ConcatenareRanduriDetalii(randuriFisier, indexRandCurent);
+                    randuriFisier[indexRandCurent] = randuriFisier[indexRandCurent] + randNetichetat;
+                    _extras.Tranzactii.Add(ParseLineWithTag61(randuriFisier[indexRandCurent].Substring(4)));
                 }
 
-                if (liniiIntrare[linieCurenta].StartsWith(":62F:"))
+                if (randuriFisier[indexRandCurent].StartsWith(":62F:"))
                 {
-                    randNetichetat = ConcatenareRanduriDetalii(liniiIntrare, linieCurenta);
-                    liniiIntrare[linieCurenta] = liniiIntrare[linieCurenta] + randNetichetat;
-                    Tag62(liniiIntrare[linieCurenta].Substring(5));
+                    randNetichetat = ConcatenareRanduriDetalii(randuriFisier, indexRandCurent);
+                    randuriFisier[indexRandCurent] = randuriFisier[indexRandCurent] + randNetichetat;
+                    ParseLineWithTag62(randuriFisier[indexRandCurent].Substring(5));
                 }
 
-                if (liniiIntrare[linieCurenta].Contains(":64:"))
+                if (randuriFisier[indexRandCurent].Contains(":64:"))
                 {
-                    randNetichetat = ConcatenareRanduriDetalii(liniiIntrare, linieCurenta);
-                    liniiIntrare[linieCurenta] = liniiIntrare[linieCurenta] + randNetichetat;
-                    Tag64(liniiIntrare[linieCurenta].Substring(4));
+                    randNetichetat = ConcatenareRanduriDetalii(randuriFisier, indexRandCurent);
+                    randuriFisier[indexRandCurent] = randuriFisier[indexRandCurent] + randNetichetat;
+                    ParseLineWithTag64(randuriFisier[indexRandCurent].Substring(4));
                 }
 
-                if (liniiIntrare[linieCurenta].Contains(":65:"))
+                if (randuriFisier[indexRandCurent].Contains(":65:"))
                 {
-                    randNetichetat = ConcatenareRanduriDetalii(liniiIntrare, linieCurenta);
-                    liniiIntrare[linieCurenta] = liniiIntrare[linieCurenta] + randNetichetat;
-                    Tag65(liniiIntrare[linieCurenta].Substring(4));
+                    randNetichetat = ConcatenareRanduriDetalii(randuriFisier, indexRandCurent);
+                    randuriFisier[indexRandCurent] = randuriFisier[indexRandCurent] + randNetichetat;
+                    ParseLineWithTag65(randuriFisier[indexRandCurent].Substring(4));
                 }
 
-                if (liniiIntrare[linieCurenta].StartsWith("-}") || liniiIntrare[linieCurenta].Equals(""))
+                if (randuriFisier[indexRandCurent].StartsWith("-}") || randuriFisier[indexRandCurent].Equals(""))
                 {
-                    _lastProcessedLineIndex = linieCurenta + 1;
+                    _lastProcessedLineIndex = indexRandCurent + 1;
                     break;
                 }
             }
@@ -259,32 +259,32 @@ namespace BankStatementReader
 
         }
 
-        public List<Extras> Parse(string[] liniiIntrare)
+        public List<Extras> Parse(string[] randuriFisier)
         {
             List<Extras> listaExtrase = new List<Extras>();
             _lastProcessedLineIndex = 0;
             do
             {
-                Extras extras = InternalParse(liniiIntrare, _lastProcessedLineIndex);
+                Extras extras = InternalParse(randuriFisier, _lastProcessedLineIndex);
                 if (extras != null)
                 {
                     listaExtrase.Add(extras);
                 }
-            } while (_lastProcessedLineIndex < liniiIntrare.Length);
+            } while (_lastProcessedLineIndex < randuriFisier.Length);
 
             return listaExtrase;
         }
 
-        public string ConcatenareRanduriDetalii(string[] liniiIntrare, int linieCurenta)
+        public string ConcatenareRanduriDetalii(string[] randuriFisier, int indexRandCurent)
         {
             string randNetichetat = "";
-            for (int linieFaraTagSauCuTag86 = linieCurenta + 1; linieFaraTagSauCuTag86 < liniiIntrare.Length; linieFaraTagSauCuTag86 += 1)
+            for (int indexRandFaraTagSauCuTag86 = indexRandCurent + 1; indexRandFaraTagSauCuTag86 < randuriFisier.Length; indexRandFaraTagSauCuTag86 += 1)
             {
-                if (!liniiIntrare[linieFaraTagSauCuTag86].StartsWith(":6") && !liniiIntrare[linieFaraTagSauCuTag86].StartsWith("-}") && !String.IsNullOrWhiteSpace(liniiIntrare[linieFaraTagSauCuTag86]))
+                if (!randuriFisier[indexRandFaraTagSauCuTag86].StartsWith(":6") && !randuriFisier[indexRandFaraTagSauCuTag86].StartsWith("-}") && !String.IsNullOrWhiteSpace(randuriFisier[indexRandFaraTagSauCuTag86]))
                 {
-                    randNetichetat += liniiIntrare[linieFaraTagSauCuTag86];
+                    randNetichetat += randuriFisier[indexRandFaraTagSauCuTag86];
                 }
-                if (String.IsNullOrWhiteSpace(liniiIntrare[linieFaraTagSauCuTag86]) || liniiIntrare[linieFaraTagSauCuTag86].Contains("-}") || liniiIntrare[linieFaraTagSauCuTag86].StartsWith(":6"))
+                if (String.IsNullOrWhiteSpace(randuriFisier[indexRandFaraTagSauCuTag86]) || randuriFisier[indexRandFaraTagSauCuTag86].Contains("-}") || randuriFisier[indexRandFaraTagSauCuTag86].StartsWith(":6"))
                 {
                     break;
                 }
@@ -296,6 +296,6 @@ namespace BankStatementReader
 
     public interface IExtrasParser
     {
-        List<Extras> Parse(string[] liniiIntrare);
+        List<Extras> Parse(string[] randuriFisier);
     }
 }
