@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankStatementReader.Parser
 {
@@ -17,7 +14,7 @@ namespace BankStatementReader.Parser
         public decimal? SumaSoldFinalDisponibil { get; }
         public string ValutaCont { get; }
         public DateTime DataExtras { get; }
-        public List<Tranzactie> Tranzactii { get; } = new List<Tranzactie>();
+        public List<Tranzactie> Tranzactii { get; }
 
         public ReportDataSource(Extras extras)
         {

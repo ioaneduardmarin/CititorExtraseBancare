@@ -25,8 +25,8 @@ namespace BankStatementReader
 
         public event EventHandler OnStatementShown
         {
-            add => this.Shown += value;
-            remove => this.Shown -= value;
+            add => Shown += value;
+            remove => Shown -= value;
         }
 
         public event RowClickEventHandler OnStatementGridRowClick
@@ -37,14 +37,14 @@ namespace BankStatementReader
 
         public event FormClosedEventHandler OnStatementFormClosing
         {
-            add => this.FormClosed += value;
-            remove => this.FormClosed += value;
+            add => FormClosed += value;
+            remove => FormClosed += value;
         }
 
         public event EventHandler OnStatementFormActivating
         {
-            add => this.Activated += value;
-            remove => this.Activated -= value;
+            add => Activated += value;
+            remove => Activated -= value;
         }
 
         public void CloseStatementForm()
@@ -76,6 +76,5 @@ namespace BankStatementReader
         void ActivateStatementForm();
         void SetMdiParent(Form mdiParent);
         event EventHandler OnStatementFormActivating;
-        bool IsActive { get; }
     }
 }

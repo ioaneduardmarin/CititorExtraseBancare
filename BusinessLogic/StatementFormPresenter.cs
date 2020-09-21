@@ -42,10 +42,9 @@ namespace BankStatementReader
 
         public List<Extras> CreateRuntimeExtrasList(string numeFisier)
         {
-            List<Extras> listaExtrase = new List<Extras>();
             string[] statementLines = File.ReadAllLines(numeFisier);
             var extrasParser = _extrasParserFactory.Create();
-            listaExtrase = extrasParser.Parse(statementLines);
+            List<Extras> listaExtrase = extrasParser.Parse(statementLines);
             _listaExtrase = listaExtrase;
             return listaExtrase;
         }
@@ -68,7 +67,7 @@ namespace BankStatementReader
             {
                 BindingList<StatementGridItemModel> statementsBindingList = new BindingList<StatementGridItemModel>();
                 BindingList<TransactionGridItemModel> transactionsBindingList = new BindingList<TransactionGridItemModel>();
-                await Task.Run(() => statementsBindingList = GetBindingStatementsList(listaExtrase));
+                await Task.Run(() => statementsBindingList = GetStatementsBindingList(listaExtrase));
                 transactionsBindingList = GetTransactionsBindingList(listaExtrase[0]);
                 _statementForm.Text = _statementForm.Text.Substring(_statementForm.Text.LastIndexOf('\\') + 1);
                 _statementForm.BindStatements(statementsBindingList);
@@ -99,7 +98,7 @@ namespace BankStatementReader
             return _statementForm.Text;
         }
 
-        public BindingList<StatementGridItemModel> GetBindingStatementsList(List<Extras> listaExtrase)
+        public BindingList<StatementGridItemModel> GetStatementsBindingList(List<Extras> listaExtrase)
         {
             BindingList<StatementGridItemModel> statementGridData = new BindingList<StatementGridItemModel>();
             statementGridData.Clear();

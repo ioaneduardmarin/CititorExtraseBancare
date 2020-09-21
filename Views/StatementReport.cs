@@ -15,7 +15,7 @@ namespace BankStatementReader.Parser
 
         public void BindReportData(BindingList<ReportDataSource> listReportDataSource)
         {
-            this.DataSource = listReportDataSource;
+            DataSource = listReportDataSource;
         }
     }
 

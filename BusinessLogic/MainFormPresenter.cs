@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using BankStatementReader.Parser;
-using DevExpress.Utils.Drawing;
 
 namespace BankStatementReader
 {
@@ -130,6 +128,5 @@ namespace BankStatementReader
 
     public interface IMainFormPresenter
     {
-        void OnOpenButtonClick(object sender, EventArgs e);
     }
 }
