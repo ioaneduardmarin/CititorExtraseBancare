@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.Utils.Drawing;
+using BankStatementReader.Parser;
 
 namespace BankStatementReader
 {
@@ -13,28 +12,34 @@ namespace BankStatementReader
         private readonly IStatementFormPresenterFactory _statementFormPresenterFactory;
         private readonly IDialogService _dialogService;
         private readonly IExtrasParserFactory _extrasParserFactory;
+        private readonly IReportBuilder _reportBuilder;
         private string _numeFisier;
+        private StatementFormPresenter _statementFormPresenter;
         private List<StatementFormPresenter> _listStatementFormPresenters = new List<StatementFormPresenter>();
         private List<Tuple<string, object>> _listStatementFormTagText = new List<Tuple<string, object>>();
-        public MainFormPresenter(IMainForm mainForm, IStatementFormFactory statementFormFactory, IStatementFormPresenterFactory statementFormPresenterFactory, IDialogService dialogService, IExtrasParserFactory extrasParserFactory)
+        public MainFormPresenter(IMainForm mainForm, IStatementFormFactory statementFormFactory, IStatementFormPresenterFactory statementFormPresenterFactory, IDialogService dialogService, IExtrasParserFactory extrasParserFactory, IReportBuilder reportBuilder)
         {
             _mainForm = mainForm;
             _statementFormFactory = statementFormFactory;
             _statementFormPresenterFactory = statementFormPresenterFactory;
             _dialogService = dialogService;
             _extrasParserFactory = extrasParserFactory;
+            _reportBuilder = reportBuilder;
             _mainForm.OnOpenButtonClick += OnOpenButtonClick;
             _mainForm.OnWindowButtonClick += OnWindowButtonClick;
             _mainForm.OnWindowStatementClick += WindowStatementClickEvent;
-            _mainForm.OnMainFormLoad += MainFormLoad;
+            _mainForm.OnMainFormLoad += OnMainFormLoad;
+            _mainForm.OnPreviewReportButton += OnPreviewReportButtonClick;
             EventAggregator.Instance.Subscribe<OpenStatementFormMessage>(e => OnOpenStatementFormMessage(e.StatementFormPresenter, _listStatementFormTagText));
             EventAggregator.Instance.Subscribe<ActiveStatementMessage>(e => OnStatementFormActivated(e.StatementFormPresenter));
             EventAggregator.Instance.Subscribe<CloseStatementFormMessage>(e => OnCloseStatementMessage(e.StatementFormPresenter));
+            EventAggregator.Instance.Subscribe<PreviewStatementMessage>(e => OnPreviewReportButtonPushed(e.StatementFormPresenter));
         }
 
-        private void MainFormLoad(object sender, EventArgs e)
+        private void OnMainFormLoad(object sender, EventArgs e)
         {
             _mainForm.SetWindowsListDropDownEnabledState(false);
+            _mainForm.SetPreviewButtonEnabledState(false);
         }
 
         private void ResetMainForm()
@@ -43,6 +48,7 @@ namespace BankStatementReader
             {
                 _mainForm.SetMainFormTitle("");
                 _mainForm.SetWindowsListDropDownEnabledState(false);
+                _mainForm.SetPreviewButtonEnabledState(false);
             }
         }
 
@@ -55,6 +61,7 @@ namespace BankStatementReader
         {
             UpdateStatmentPresenterList(statementFormPresenter);
             _mainForm.SetWindowsListDropDownEnabledState(true);
+            _mainForm.SetPreviewButtonEnabledState(true);
             _mainForm.CreateWindowDropDownList(_listStatementFormTagText);
         }
 
@@ -83,7 +90,7 @@ namespace BankStatementReader
             {
                 var statementForm = _statementFormFactory.Create();
                 statementForm.Text = _numeFisier;
-                var statementFormPresenter = _statementFormPresenterFactory.Create(_extrasParserFactory, statementForm, _dialogService);
+                var statementFormPresenter = _statementFormPresenterFactory.Create(_extrasParserFactory, statementForm, _dialogService, _reportBuilder);
                 statementFormPresenter.SetMdiParent(_mainForm.GetForm());
                 _mainForm.CreateWindowDropDownList(_listStatementFormTagText);
                 EventAggregator.Instance.Publish(new OpenStatementFormMessage((StatementFormPresenter)statementFormPresenter));
@@ -101,14 +108,25 @@ namespace BankStatementReader
 
         public void OnStatementFormActivated(StatementFormPresenter statementFormPresenter)
         {
+            _statementFormPresenter = statementFormPresenter;
             string statementFormName = statementFormPresenter.GetStatementFormName()
                  .Substring(statementFormPresenter.GetStatementFormName().LastIndexOf('\\') + 1);
             _mainForm.SetMainFormTitle(statementFormName);
+        }
+
+        private void OnPreviewReportButtonClick(object sender, EventArgs e)
+        {
+            EventAggregator.Instance.Publish(new PreviewStatementMessage(_statementFormPresenter));
+        }
+
+        private void OnPreviewReportButtonPushed(StatementFormPresenter statementFormPresenter)
+        {
+            var report = statementFormPresenter.CreateReport();
+            _reportBuilder.ShowReport(report);
         }
     }
 
     public interface IMainFormPresenter
     {
-        void OnOpenButtonClick(object sender, EventArgs e);
     }
 }

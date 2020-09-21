@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 
 namespace BankStatementReader
@@ -18,7 +19,7 @@ namespace BankStatementReader
         public decimal SumaSoldInitial { get; set; }
         public string? InformatiiPentruClientSoldInitial { get; set; }
         //Contine tranzactiile din exras
-        public List<Tranzactie> Tranzactii = new List<Tranzactie>();
+        public List<Tranzactie> Tranzactii { get; set; }= new List<Tranzactie>();
         //Informatii despre soldul final rezervat
         public string CodSoldFinalRezervat { get; set; }
         public DateTime DataSoldRezervat { get; set; }

@@ -35,6 +35,21 @@ namespace BankStatementReader
             return null;
         }
 
+        public string SaveFile()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            if (saveFileDialog.ShowDialog() == (System.Windows.Forms.DialogResult)DialogResult.OK)
+            {
+                string path = saveFileDialog.FileName;
+                return path;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         public void Show(string message)
         {
             MessageBox.Show(message);
@@ -46,5 +61,6 @@ namespace BankStatementReader
     {
         string OpenFile();
         void Show(string message);
+        string SaveFile();
     }
 }

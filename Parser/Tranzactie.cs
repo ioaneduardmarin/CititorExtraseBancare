@@ -12,5 +12,6 @@ namespace BankStatementReader
         public string ReferintaClient { get; set; }
         public string DetaliiTranzactie { get; set; }
         public string InformatiiPentruClient { get; set; }
+        public DateTime DataValutei { get; set; }
     }
 }

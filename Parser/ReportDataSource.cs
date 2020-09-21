@@ -1,17 +1,22 @@
-﻿namespace BankStatementReader
+﻿using System;
+using System.Collections.Generic;
+
+namespace BankStatementReader.Parser
 {
-    public class StatementGridItemModel
+    public class ReportDataSource
     {
-        //SGIM=StatementGridItemModel
         public int Id { get; }
         public string NumarReferintaCont { get; }
         public string ContIban { get; }
         public string NumarExtras { get; }
         public decimal SumaSoldInitial { get; }
         public decimal SumaSoldFinalRezervat { get; }
-        public string Valuta { get; }
+        public decimal? SumaSoldFinalDisponibil { get; }
+        public string ValutaCont { get; }
+        public DateTime DataExtras { get; }
+        public List<Tranzactie> Tranzactii { get; }
 
-        public StatementGridItemModel(Extras extras)
+        public ReportDataSource(Extras extras)
         {
             Id = extras.ExtrasId;
             NumarReferintaCont = extras.NumarReferinta;
@@ -19,7 +24,10 @@
             NumarExtras = extras.NrExtras;
             SumaSoldInitial = extras.SumaSoldInitial;
             SumaSoldFinalRezervat = extras.SumaSoldRezervat;
-            Valuta = extras.ValutaSoldInitial;
+            SumaSoldFinalDisponibil = extras.SumaSoldFinalDisponibil;
+            Tranzactii = extras.Tranzactii;
+            DataExtras = extras.DataSoldInitial;
+            ValutaCont = extras.ValutaSoldInitial;
         }
     }
 }
