@@ -81,12 +81,13 @@
     <Compile Include="Factories\StatementFormPresenterFactory.cs" />
     <Compile Include="BusinessLogic\StatementFormPresenter.cs" />
     <Compile Include="Parser\ReportBuilder.cs" />
-    <Compile Include="Parser\ReportDataSource.cs" />
+    <Compile Include="Parser\StatementReportDataSource.cs" />
     <Compile Include="Parser\TransactionGridItemModel.cs" />
     <Compile Include="Parser\StatementGridItemModel.cs" />
     <Compile Include="Parser\Extras.cs" />
     <Compile Include="Parser\ExtrasParser.cs" />
     <Compile Include="BusinessLogic\MainFormPresenter.cs" />
+    <Compile Include="Parser\TransactionItemReportModel.cs" />
     <Compile Include="Views\StatementReport.cs">
       <SubType>Component</SubType>
     </Compile>

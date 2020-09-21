@@ -861,7 +861,7 @@
             // 
             // reportExtrasDataSource
             // 
-            this.reportExtrasDataSource.DataSource = typeof(BankStatementReader.Parser.ReportDataSource);
+            this.reportExtrasDataSource.DataSource = typeof(BankStatementReader.Parser.StatementReportDataSource);
             this.reportExtrasDataSource.Name = "reportExtrasDataSource";
             // 
             // StatementReport

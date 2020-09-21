@@ -13,7 +13,7 @@ namespace BankStatementReader.Parser
             InitializeComponent();
         }
 
-        public void BindReportData(BindingList<ReportDataSource> listReportDataSource)
+        public void BindReportData(BindingList<StatementReportDataSource> listReportDataSource)
         {
             DataSource = listReportDataSource;
         }
@@ -21,6 +21,6 @@ namespace BankStatementReader.Parser
 
     public interface IStatementReport
     {
-        void BindReportData(BindingList<ReportDataSource> listReportDataSource);
+        void BindReportData(BindingList<StatementReportDataSource> listReportDataSource);
     }
 }

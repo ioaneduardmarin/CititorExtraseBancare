@@ -16,7 +16,7 @@ namespace BankStatementReader
         private readonly IDialogService _dialogService;
         private readonly IReportBuilder _reportBuilder;
         private List<Extras> _listaExtrase;
-        private BindingList<ReportDataSource> _listaExtraseReport;
+        private BindingList<StatementReportDataSource> _listaExtraseReport;
 
         public StatementFormPresenter(IExtrasParserFactory extrasParserFactory, IStatementForm statementForm, IDialogService dialogService, IReportBuilder reportBuilder)
         {
@@ -120,22 +120,44 @@ namespace BankStatementReader
             return listaTranzactii;
         }
 
-        public void CreateReportBindingList(List<Extras> listaExtrase)
+        public List<TransactionItemReportModel> GetTransactionsReportBindingList(Extras extras)
         {
-            BindingList<ReportDataSource> listaExtraseReport = new BindingList<ReportDataSource>();
-            listaExtraseReport.Clear();
-            for (int index = 0; index < listaExtrase.Count; index += 1)
+            List<TransactionItemReportModel> listaTranzactii = new List<TransactionItemReportModel>();
+            listaTranzactii.Clear();
+            for (int index = 0; index < extras.Tranzactii.Count; index += 1)
             {
-                listaExtraseReport.Add(new ReportDataSource(listaExtrase[index]));
+                listaTranzactii.Add(new TransactionItemReportModel(extras.Tranzactii[index]));
             }
+            return listaTranzactii;
+        }
 
-            _listaExtraseReport = listaExtraseReport;
+        public BindingList<StatementReportDataSource> CreateReportBindingList(List<Extras> listaExtrase)
+        {
+            BindingList<StatementReportDataSource> listaExtraseReport = new BindingList<StatementReportDataSource>();
+            listaExtraseReport.Clear();
+            for (int indexExtras = 0; indexExtras < listaExtrase.Count; indexExtras += 1)
+            {
+                var reportDataSource = new StatementReportDataSource(listaExtrase[indexExtras]);
+                reportDataSource.Id = listaExtrase[indexExtras].ExtrasId;
+                reportDataSource.NumarReferintaCont = listaExtrase[indexExtras].NumarReferinta;
+                reportDataSource.ContIban = listaExtrase[indexExtras].Iban;
+                reportDataSource.NumarExtras = listaExtrase[indexExtras].NrExtras;
+                reportDataSource.SumaSoldInitial = listaExtrase[indexExtras].SumaSoldInitial;
+                reportDataSource.SumaSoldFinalRezervat = listaExtrase[indexExtras].SumaSoldRezervat;
+                reportDataSource.SumaSoldFinalDisponibil = listaExtrase[indexExtras].SumaSoldFinalDisponibil;
+                reportDataSource.DataExtras = listaExtrase[indexExtras].DataSoldInitial;
+                reportDataSource.ValutaCont = listaExtrase[indexExtras].ValutaSoldInitial;
+                reportDataSource.Tranzactii = GetTransactionsReportBindingList(listaExtrase[indexExtras]);
+                listaExtraseReport.Add(reportDataSource);
+            }
+            return listaExtraseReport;
         }
 
         public StatementReport CreateReport()
         {
             StatementReport statementReport = _reportBuilder.CreateReport(this);
-            statementReport.BindReportData(_listaExtraseReport);
+            var listaExtraseReport = CreateReportBindingList(_listaExtrase);
+            statementReport.BindReportData(listaExtraseReport);
             return statementReport;
         }
     }
